@@ -1,14 +1,5 @@
 import * as PIXI from "pixi.js";
-import {
-  filterByKey,
-  including,
-  includingReservedProps,
-  isPointType,
-  not,
-  parsePoint,
-  setPixiValue,
-} from "../src/utils";
-import { RESERVED_PROPS } from "../src/props";
+import { filterByKey, including, isPointType, not, parsePoint, setPixiValue } from "../src/utils";
 
 describe("not", () => {
   it("returns a function", () => {
@@ -76,20 +67,6 @@ describe("including", () => {
   });
 });
 
-describe("includingReservedProps", () => {
-  it("returns true if prop is not one of DisplayObject members", () => {
-    Object.keys(RESERVED_PROPS).forEach(propName => {
-      expect(includingReservedProps(propName)).toBeTruthy();
-    });
-  });
-
-  it("returns false if prop is not one of RESERVED_PROPS", () => {
-    expect(includingReservedProps("anchor")).toBeFalsy();
-    expect(includingReservedProps("style")).toBeFalsy();
-    expect(includingReservedProps("width")).toBeFalsy();
-  });
-});
-
 describe("parsePoint", () => {
   it("returns array", () => {
     expect(parsePoint()).toHaveLength(0);
@@ -132,30 +109,6 @@ describe("isPointType", () => {
 });
 
 describe("setPixiValue", () => {
-  /*
-  export function setPixiValue(instance, propName, value) {
-    if (isPointType(instance[propName])) {
-      // Parse value if a non-Point type is being assigned to a Point type
-      const coordinateData = parsePoint(value);
-
-      invariant(
-        typeof coordinateData !== "undefined" && coordinateData.length > 0 && coordinateData.length < 3,
-        "The property `%s` is a PIXI.Point or PIXI.ObservablePoint and must be set to a comma-separated string of " +
-          "either 1 or 2 coordinates, a 1 or 2 element array containing coordinates, or a PIXI Point/ObservablePoint. " +
-          "If only one coordinate is given then X and Y will be set to the provided value. Received: `%s` of type `%s`.",
-        propName,
-        JSON.stringify(value),
-        typeof value
-      );
-
-      instance[propName].set(coordinateData.shift(), coordinateData.shift());
-    } else {
-      // Just assign the value directly if a non-Point type is being assigned to a non-Point type
-      instance[propName] = value;
-    }
-  }
-
-   */
   it("copies value if current and next value are point types", () => {
     class JestPoint extends PIXI.Point {}
     JestPoint.prototype.copy = jest.fn(PIXI.Point.prototype.copy);

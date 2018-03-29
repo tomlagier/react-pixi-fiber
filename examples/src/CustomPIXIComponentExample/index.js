@@ -16,13 +16,17 @@ class CustomComponentExample extends Component {
   };
 
   componentDidMount = () => {
-    setInterval(() => {
+    this.timer = setInterval(() => {
       this.setState(state => ({
         ...state,
         color: (state.color + 1) % COLORS.length,
         position: (state.position + 1) % POSITIONS.length,
       }));
     }, 2000);
+  };
+
+  componentWillUnmount = () => {
+    clearInterval(this.timer);
   };
 
   render() {
